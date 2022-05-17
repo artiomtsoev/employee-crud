@@ -1,7 +1,7 @@
 {
   "employees": [
     {
-      "id": "1a6e0804-2bd0-4672-b79d-d97027f9071a",
+      "id": "JRRFKrrF",
       "fullname": "Artiom Tsoev",
       "birthdate": "2019-09-26T00:00:00.000Z",
       "office": "1a6e0804-aaaa-4672-b79d-d97027f9071a",
@@ -12,7 +12,7 @@
       ]
     },
     {
-      "id": "2a6e0804-2bd0-4672-b79d-d97027f9071a",
+      "id": "JRereKpF",
       "fullname": "Vasia Pupkin",
       "office": "1a6e0804-dddd-4672-b79d-d97027f9071a",
       "birthdate": "2019-09-26T00:00:00.000Z",
@@ -23,7 +23,7 @@
       ]
     },
     {
-      "id": "8a6e0804-2bd0-4672-b79d-d97027f9071a",
+      "id": "JsdsdKpF",
       "fullname": "Jora Bosiak",
       "office": "1a6e0804-aaaa-4672-b79d-d97027f9071a",
       "birthdate": "2019-09-26T00:00:00.000Z",
