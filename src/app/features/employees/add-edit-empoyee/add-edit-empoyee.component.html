@@ -1,0 +1,39 @@
+<div class="change-employee">
+    <div class="change-employee__header">
+        <label *ngIf="!data.employee">New emloyee</label>
+        <label *ngIf="data.employee">Edit emloyee</label>
+    </div>
+    
+    <form [formGroup]="form" class="employee-form">
+        <mat-form-field>
+            <input matInput formControlName="fullname" placeholder="Full Name" />
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput formControlName="phonenumber" placeholder="Phone Number" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select formControlName="office" placeholder="Office">
+                <mat-option>None</mat-option>
+                <ng-container *ngFor="let office of data.offices">
+                    <mat-option value="{{office.id}}">
+                        {{office.name}}
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput formControlName="birthdate" [matDatepicker]="picker" placeholder="Birthdate" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select formControlName="tags" placeholder="Tags" multiple>
+                <mat-option *ngFor="let tag of data.allTags" [value]="tag">{{tag}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="employee-form__buttons">
+            <button mat-raised-button color="primary" (click)="createEmployee()">Submit</button>
+            <button mat-raised-button color="warn" (click)="cancel()">Cancel</button>
+        </div>
+    </form>
+</div>

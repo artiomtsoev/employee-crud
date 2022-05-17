@@ -1,0 +1,48 @@
+:host {
+    width: 100%;
+}
+
+.employee-list {
+    width: 100%;
+    padding-top: 25px;
+
+    &__header {
+        margin-bottom: 20px;
+    }
+
+    &__delete-icon {
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    table {
+        width: inherit;
+    }
+
+    &__cell-tag {
+        display: flex;
+        height: inherit;
+        align-items: center;
+
+        input {
+            border: none;
+            margin-left: 10px;
+            height: 30px;
+        }
+
+        input:focus-visible {
+            outline-offset: 0px;
+            border: none;
+        }
+    }
+
+    ::ng-deep {
+        .mat-paginator-container {
+            justify-content: center;
+        }
+
+        .mat-chip.mat-standard-chip.mat-chip-disabled {
+            opacity: 0.7;
+        }
+    }
+}

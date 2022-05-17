@@ -1,0 +1,12 @@
+.change-employee {
+    &__header {
+        margin-bottom: 10px;
+    }
+}
+
+.employee-form {
+    &__buttons {
+        display: flex;
+        justify-content: space-around;
+    }
+}
