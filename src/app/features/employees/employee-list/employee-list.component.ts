@@ -4,13 +4,13 @@ import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ToastrService } from 'ngx-toastr';
 import { Employee } from 'src/app/models/employee.model';
 import { EmployeesService } from 'src/app/services/employees.service';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import { Office } from 'src/app/models/office.model';
 import { AddEditEmpoyeeComponent } from '../add-edit-empoyee/add-edit-empoyee.component';
+import { delay, finalize } from 'rxjs/operators';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -22,14 +22,12 @@ export class EmployeeListComponent implements OnInit {
   public employees: MatTableDataSource<Employee>;
   public offices: Office[] = [];
   public allTags: string[] = [];
+  public tagCtrl = new FormControl();
+  public isLoading$ = new BehaviorSubject<boolean>(false);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
   @ViewChild('tagInput') fruitInput: ElementRef<HTMLInputElement>;
-
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  tagCtrl = new FormControl();
 
   public displayedColumns: string[] = [
     'fullname',
@@ -40,11 +38,10 @@ export class EmployeeListComponent implements OnInit {
     'actions',
   ];
 
-
   constructor(
     public emplService: EmployeesService,
     public dialog: MatDialog,
-    private toastr: ToastrService,
+    private notificationService: NotificationService,
   ) { }
 
   public ngOnInit(): void {
@@ -76,20 +73,24 @@ export class EmployeeListComponent implements OnInit {
   public deleteEmployee(employee: Employee): void {
     this.emplService.deleteEmployee(employee.id).subscribe(
       () => {
-        this.toastr.success('Employee was deleted', 'Success');
+        this.notificationService.success('Employee was deleted', 'Success');
       },
       () => {
-        this.toastr.error('Something\'s wrong on deleting employee', 'Fail');
+        this.notificationService.warn('Something\'s wrong on deleting employee', 'Fail');
       });
 
     this.getDataForTable();
   }
 
   private getDataForTable(): void {
+    this.isLoading$.next(true);
     combineLatest([
       this.emplService.getEmployees(),
       this.emplService.getOffices()
-    ]).subscribe(([employees, offices]: [Employee[], Office[]]) => {
+    ]).pipe(
+      delay(500),
+      finalize(() => { this.isLoading$.next(false); }),
+    ).subscribe(([employees, offices]: [Employee[], Office[]]) => {
       this.employees = new MatTableDataSource(employees);
       this.employees.sort = this.sort;
       this.employees.paginator = this.paginator;
@@ -108,10 +109,10 @@ export class EmployeeListComponent implements OnInit {
   private addNewEmployee(employee: Employee): void {
     this.emplService.addNewEmployee(employee).subscribe(
       (response: Employee) => {
-        this.toastr.success('Employee was created', 'Success');
+        this.notificationService.success('Employee was created', 'Success');
       },
       () => {
-        this.toastr.error('Something\'s wrong on adding new employee', 'Fail');
+        this.notificationService.warn('Something\'s wrong on adding new employee', 'Fail');
       });
 
     this.getDataForTable();
@@ -120,13 +121,11 @@ export class EmployeeListComponent implements OnInit {
   private updateEmployee(employee: Employee): void {
     this.emplService.updateEmployee(employee).subscribe(
       (response: Employee) => {
-        this.toastr.success('Employee was changed', 'Success');
+        this.notificationService.success('Employee was changed', 'Success');
       },
       () => {
-        this.toastr.error('Something\'s wrong on editing employee', 'Fail');
+        this.notificationService.warn('Something\'s wrong on editing employee', 'Fail');
       });
-      
-    this.getDataForTable();
   }
 
   private openDialog(empoyee?: Employee): void {

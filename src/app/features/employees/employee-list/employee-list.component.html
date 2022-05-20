@@ -2,57 +2,64 @@
     <div class="employee-list__header">
         <button mat-raised-button (click)="createNewEmployee()">Create</button>
     </div>
-    <table mat-table [dataSource]="employees" class="mat-elevation-z8" matSort>
-        <ng-container matColumnDef="fullname">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Full name </th>
-            <td mat-cell *matCellDef="let element"> {{element.fullname}} </td>
-        </ng-container>
 
-        <ng-container matColumnDef="office">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Office </th>
-            <td mat-cell *matCellDef="let element"> {{element.office | officeName : offices}} </td>
-        </ng-container>
+    <div class="employee-list__spinner" *ngIf="isLoading$ | async">
+        <mat-spinner></mat-spinner>
+    </div>
 
-        <ng-container matColumnDef="birthdate">
-            <th mat-header-cell *matHeaderCellDef> Birthdate </th>
-            <td mat-cell *matCellDef="let element"> {{ element.birthdate | date: 'YYYY-MM-dd' }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="phonenumber">
-            <th mat-header-cell *matHeaderCellDef> Phonenumber </th>
-            <td mat-cell *matCellDef="let element"> {{element.phonenumber}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="tags">
-            <th mat-header-cell *matHeaderCellDef> Tags </th>
-            <td mat-cell *matCellDef="let element">
-                <div class="employee-list__cell-tag">
-                    <mat-chip-list aria-label="Tags" [disabled]="true">
-                        <mat-chip *ngFor="let tag of element.tags">
-                            {{tag}}
-                            <mat-icon class="employee-list__delete-icon" (click)="removeTag(tag, element)">cancel
-                            </mat-icon>
-                        </mat-chip>
-                    </mat-chip-list>
-                    <input placeholder="New tag..." (keydown.enter)="addTag($event, element)">
-                </div>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
-            <td mat-cell *matCellDef="let element">
-                <button mat-icon-button (click)="editEmployee(element)">
-                    <mat-icon>launch</mat-icon>
-                </button>
-                <button mat-icon-button color="warn" (click)="deleteEmployee(element)">
-                    <mat-icon>delete_outline</mat-icon>
-                </button>
-            </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+    <ng-container *ngIf="!(isLoading$ | async)">
+        <table mat-table [dataSource]="employees" class="mat-elevation-z8" matSort>
+            <ng-container matColumnDef="fullname">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Full name </th>
+                <td mat-cell *matCellDef="let element"> {{element.fullname}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="office">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Office </th>
+                <td mat-cell *matCellDef="let element"> {{element.office | officeName : offices}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="birthdate">
+                <th mat-header-cell *matHeaderCellDef> Birthdate </th>
+                <td mat-cell *matCellDef="let element"> {{ element.birthdate | date: 'YYYY-MM-dd' }} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="phonenumber">
+                <th mat-header-cell *matHeaderCellDef> Phonenumber </th>
+                <td mat-cell *matCellDef="let element"> {{element.phonenumber}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="tags">
+                <th mat-header-cell *matHeaderCellDef> Tags </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="employee-list__cell-tag">
+                        <mat-chip-list aria-label="Tags" [disabled]="true">
+                            <mat-chip *ngFor="let tag of element.tags">
+                                {{tag}}
+                                <mat-icon class="employee-list__delete-icon" (click)="removeTag(tag, element)">cancel
+                                </mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+                        <input placeholder="New tag..." (keydown.enter)="addTag($event, element)">
+                    </div>
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button (click)="editEmployee(element)">
+                        <mat-icon>launch</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteEmployee(element)">
+                        <mat-icon>delete_outline</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+    </ng-container>
 </div>

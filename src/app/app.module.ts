@@ -11,8 +11,8 @@ import { NavComponent } from './core/nav/nav.component';
 import { ToolbarComponent } from './core/toolbar/toolbar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     MatButtonModule,
     HttpClientModule,
     CommonModule,
-    ToastrModule.forRoot(),
+    MatSnackBarModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

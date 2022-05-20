@@ -17,30 +17,32 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { MatNativeDateModule } from "@angular/material/core";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-    declarations: [
+  declarations: [
     EmployeeListComponent,
     AddEditEmpoyeeComponent,
   ],
-    imports: [
-      EmployeesRoutingModule,
-      CommonModule,
-      HttpClientModule,
-      MatButtonModule,
-      MatChipsModule,
-      MatDatepickerModule,
-      MatDialogModule,
-      MatIconModule,
-      MatInputModule,
-      MatPaginatorModule,
-      MatSelectModule,
-      MatSortModule,
-      MatTableModule,
-      MatNativeDateModule,
-      SharedModule,
-      ReactiveFormsModule,
-    ],
+  imports: [
+    EmployeesRoutingModule,
+    CommonModule,
+    HttpClientModule,
+    MatButtonModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatIconModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatSortModule,
+    MatTableModule,
+    MatNativeDateModule,
+    SharedModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
+  ],
 })
 export class EmployeesModule {
 

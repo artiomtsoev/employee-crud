@@ -4,7 +4,7 @@ import { Employee } from 'src/app/models/employee.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Office } from 'src/app/models/office.model';
 import { EmployeesService } from 'src/app/services/employees.service';
-import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-add-edit-empoyee',
@@ -19,7 +19,7 @@ export class AddEditEmpoyeeComponent implements OnInit {
     public dialogRef: MatDialogRef<AddEditEmpoyeeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { offices: Office[], allTags: string[], employee: Employee },
     public employeeService: EmployeesService,
-    private toastr: ToastrService,
+    private notificationService: NotificationService,
   ) {
     this.initializeForm();
   }
@@ -43,7 +43,7 @@ export class AddEditEmpoyeeComponent implements OnInit {
 
       this.dialogRef.close(employee)
     } else {
-      this.toastr.error('Failed to save employee');
+      this.notificationService.warn('Failed to save employee', 'Fail');
     }
   }
 
